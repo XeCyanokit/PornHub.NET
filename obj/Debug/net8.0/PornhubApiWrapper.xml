@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PornhubApiWrapper</name>
+    </assembly>
+    <members>
+        <member name="T:PornhubApiWrapper.ApiResponseEventArgs">
+            <summary>Provides the raw API response for developer mode or logging.</summary>
+        </member>
+        <member name="T:PornhubApiWrapper.Extensions.ServiceCollectionExtensions">
+            <summary>
+            Dependency injection helpers for registering the wrapper as a typed HttpClient.
+            </summary>
+        </member>
+        <member name="M:PornhubApiWrapper.Extensions.ServiceCollectionExtensions.AddPornhubApiWrapper(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{PornhubApiWrapper.PornhubClientOptions})">
+            <summary>
+            Registers wrapper services, in-memory cache, and a typed HttpClient.
+            </summary>
+        </member>
+        <member name="T:PornhubApiWrapper.IPornhubClient">
+            <summary>
+            Main abstraction for interacting with public Pornhub Webmasters endpoints.
+            </summary>
+        </member>
+        <member name="E:PornhubApiWrapper.IPornhubClient.RawResponseReceived">
+            <summary>Raised after every API response (including from cache). Use for developer mode or logging.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.GetRawResponseAsync(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.Threading.CancellationToken)">
+            <summary>Returns the raw JSON response for an endpoint without deserializing.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.SearchVideosAsync(PornhubApiWrapper.Requests.SearchVideosRequest,System.Threading.CancellationToken)">
+            <summary>Searches videos using filters and pagination.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.SearchVideosWithTotalAsync(PornhubApiWrapper.Requests.SearchVideosRequest,System.Threading.CancellationToken)">
+            <summary>Searches videos and returns the list plus total count when the API provides it.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.GetTrendingVideosAsync(PornhubApiWrapper.Requests.TrendingVideosRequest,System.Threading.CancellationToken)">
+            <summary>Returns trending videos.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.GetVideoByIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary>Fetches details for a single video ID.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.IsVideoActiveAsync(System.String,System.Threading.CancellationToken)">
+            <summary>Checks whether a video is currently active.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.GetActressesAsync(PornhubApiWrapper.Requests.ActressSearchRequest,System.Threading.CancellationToken)">
+            <summary>Lists actresses/stars.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.GetCategoriesAsync(System.Threading.CancellationToken)">
+            <summary>Lists categories.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.GetTagsAsync(PornhubApiWrapper.Requests.TagSearchRequest,System.Threading.CancellationToken)">
+            <summary>Lists tags.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.GetChannelsAsync(PornhubApiWrapper.Requests.ChannelSearchRequest,System.Threading.CancellationToken)">
+            <summary>Lists channels when endpoint is available.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.GetDeletedVideosAsync(PornhubApiWrapper.Requests.DeletedVideosRequest,System.Threading.CancellationToken)">
+            <summary>Lists deleted videos.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.GetRawEndpointAsync``1(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.Threading.CancellationToken)">
+            <summary>Calls a raw endpoint and deserializes into the requested type.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.TryGetRawEndpointAsync``1(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.Threading.CancellationToken)">
+            <summary>Non-throwing version of <see cref="M:PornhubApiWrapper.IPornhubClient.GetRawEndpointAsync``1(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.Threading.CancellationToken)"/>.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.StreamSearchVideosAsync(PornhubApiWrapper.Requests.SearchVideosRequest,System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>Streams paginated video search results.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.StreamTrendingVideosAsync(PornhubApiWrapper.Requests.TrendingVideosRequest,System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>Streams paginated trending video results.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.StreamActressesAsync(PornhubApiWrapper.Requests.ActressSearchRequest,System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>Streams paginated actress results.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.StreamTagsAsync(PornhubApiWrapper.Requests.TagSearchRequest,System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>Streams paginated tag results.</summary>
+        </member>
+        <member name="M:PornhubApiWrapper.IPornhubClient.StreamDeletedVideosAsync(PornhubApiWrapper.Requests.DeletedVideosRequest,System.Nullable{System.Int32},System.Threading.CancellationToken)">
+            <summary>Streams paginated deleted video results.</summary>
+        </member>
+        <member name="T:PornhubApiWrapper.PornhubClientOptions">
+            <summary>
+            Configuration for transport behavior, resiliency, pagination, and caching.
+            </summary>
+        </member>
+        <member name="P:PornhubApiWrapper.PornhubClientOptions.BaseUrl">
+            <summary>Base URL for webmasters endpoints.</summary>
+        </member>
+        <member name="P:PornhubApiWrapper.PornhubClientOptions.ThrowOnHttpErrors">
+            <summary>Throw exceptions on non-success status codes.</summary>
+        </member>
+        <member name="P:PornhubApiWrapper.PornhubClientOptions.UserAgent">
+            <summary>User-Agent header sent by the wrapper.</summary>
+        </member>
+        <member name="P:PornhubApiWrapper.PornhubClientOptions.Timeout">
+            <summary>Request timeout used by the client.</summary>
+        </member>
+        <member name="P:PornhubApiWrapper.PornhubClientOptions.EnableCompatibilityFallbacks">
+            <summary>Enable endpoint-specific compatibility fallbacks.</summary>
+        </member>
+        <member name="P:PornhubApiWrapper.PornhubClientOptions.Pagination">
+            <summary>Pagination defaults and limits.</summary>
+        </member>
+        <member name="P:PornhubApiWrapper.PornhubClientOptions.Resilience">
+            <summary>Resilience policy options.</summary>
+        </member>
+        <member name="P:PornhubApiWrapper.PornhubClientOptions.Cache">
+            <summary>Caching policy options.</summary>
+        </member>
+        <member name="T:PornhubApiWrapper.PaginationDefaults">
+            <summary>
+            Default and maximum pagination values.
+            </summary>
+        </member>
+        <member name="T:PornhubApiWrapper.ResilienceOptions">
+            <summary>
+            Retry and circuit breaker behavior.
+            </summary>
+        </member>
+        <member name="T:PornhubApiWrapper.CacheOptions">
+            <summary>
+            Cache behavior for endpoint payloads.
+            </summary>
+        </member>
+        <member name="P:PornhubApiWrapper.Requests.ActressSearchRequest.Sort">
+            <summary>Sort order: view, trend, subs, alpha, videos, random (when supported by API).</summary>
+        </member>
+        <member name="P:PornhubApiWrapper.Requests.SearchVideosRequest.Query">
+            <summary>Free-text search query.</summary>
+        </member>
+        <member name="P:PornhubApiWrapper.Requests.SearchVideosRequest.Phrase">
+            <summary>Exact phrase search (when supported by API).</summary>
+        </member>
+        <member name="T:PornhubApiWrapper.Results.SearchVideosResult">
+            <summary>Search result with optional total count when the API provides it.</summary>
+        </member>
+    </members>
+</doc>

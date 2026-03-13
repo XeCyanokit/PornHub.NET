@@ -1,0 +1,14 @@
+C:\Users\photo\OneDrive\Desktop\API Wrapper\PornhubApiWrapper\bin\Release\net8.0\PornhubApiWrapper.deps.json
+C:\Users\photo\OneDrive\Desktop\API Wrapper\PornhubApiWrapper\bin\Release\net8.0\PornhubApiWrapper.dll
+C:\Users\photo\OneDrive\Desktop\API Wrapper\PornhubApiWrapper\bin\Release\net8.0\PornhubApiWrapper.pdb
+C:\Users\photo\OneDrive\Desktop\API Wrapper\PornhubApiWrapper\bin\Release\net8.0\PornhubApiWrapper.xml
+C:\Users\photo\OneDrive\Desktop\API Wrapper\PornhubApiWrapper\obj\Release\net8.0\PornhubApiWrapper.csproj.AssemblyReference.cache
+C:\Users\photo\OneDrive\Desktop\API Wrapper\PornhubApiWrapper\obj\Release\net8.0\PornhubApiWrapper.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\photo\OneDrive\Desktop\API Wrapper\PornhubApiWrapper\obj\Release\net8.0\PornhubApiWrapper.AssemblyInfoInputs.cache
+C:\Users\photo\OneDrive\Desktop\API Wrapper\PornhubApiWrapper\obj\Release\net8.0\PornhubApiWrapper.AssemblyInfo.cs
+C:\Users\photo\OneDrive\Desktop\API Wrapper\PornhubApiWrapper\obj\Release\net8.0\PornhubApiWrapper.csproj.CoreCompileInputs.cache
+C:\Users\photo\OneDrive\Desktop\API Wrapper\PornhubApiWrapper\obj\Release\net8.0\PornhubApiWrapper.dll
+C:\Users\photo\OneDrive\Desktop\API Wrapper\PornhubApiWrapper\obj\Release\net8.0\refint\PornhubApiWrapper.dll
+C:\Users\photo\OneDrive\Desktop\API Wrapper\PornhubApiWrapper\obj\Release\net8.0\PornhubApiWrapper.xml
+C:\Users\photo\OneDrive\Desktop\API Wrapper\PornhubApiWrapper\obj\Release\net8.0\PornhubApiWrapper.pdb
+C:\Users\photo\OneDrive\Desktop\API Wrapper\PornhubApiWrapper\obj\Release\net8.0\ref\PornhubApiWrapper.dll

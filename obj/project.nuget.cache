@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "dgSpecHash": "yhy4eqcyaxQ=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\photo\\OneDrive\\Desktop\\API Wrapper\\PornhubApiWrapper\\PornhubApiWrapper.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\10.0.3\\microsoft.extensions.caching.abstractions.10.0.3.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.extensions.caching.memory\\10.0.3\\microsoft.extensions.caching.memory.10.0.3.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.extensions.configuration\\10.0.3\\microsoft.extensions.configuration.10.0.3.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\10.0.3\\microsoft.extensions.configuration.abstractions.10.0.3.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.extensions.configuration.binder\\10.0.3\\microsoft.extensions.configuration.binder.10.0.3.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\10.0.3\\microsoft.extensions.dependencyinjection.10.0.3.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.3\\microsoft.extensions.dependencyinjection.abstractions.10.0.3.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.extensions.diagnostics\\10.0.3\\microsoft.extensions.diagnostics.10.0.3.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.extensions.diagnostics.abstractions\\10.0.3\\microsoft.extensions.diagnostics.abstractions.10.0.3.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.extensions.http\\10.0.3\\microsoft.extensions.http.10.0.3.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.extensions.logging\\10.0.3\\microsoft.extensions.logging.10.0.3.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\10.0.3\\microsoft.extensions.logging.abstractions.10.0.3.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.extensions.options\\10.0.3\\microsoft.extensions.options.10.0.3.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.extensions.options.configurationextensions\\10.0.3\\microsoft.extensions.options.configurationextensions.10.0.3.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.extensions.primitives\\10.0.3\\microsoft.extensions.primitives.10.0.3.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.12\\microsoft.net.illink.tasks.8.0.12.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\system.diagnostics.diagnosticsource\\10.0.3\\system.diagnostics.diagnosticsource.10.0.3.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\8.0.12\\microsoft.netcore.app.runtime.win-x64.8.0.12.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.12\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.12.nupkg.sha512",
+    "C:\\Users\\photo\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.12\\microsoft.aspnetcore.app.runtime.win-x64.8.0.12.nupkg.sha512"
+  ],
+  "logs": []
+}
