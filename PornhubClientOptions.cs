@@ -7,6 +7,15 @@ public sealed class PornhubClientOptions
 {
     /// <summary>Base URL for webmasters endpoints.</summary>
     public string BaseUrl { get; set; } = "https://www.pornhub.com/webmasters/";
+    /// <summary>
+    /// When the primary <see cref="BaseUrl"/> returns HTML instead of JSON, also try these bases (deduplicated, trailing slash normalized).
+    /// Useful if Pornhub moves JSON to another host while <c>/webmasters/</c> serves a marketing page.
+    /// </summary>
+    public IList<string> AlternateApiBaseUrls { get; set; } = new List<string>();
+    /// <summary>
+    /// If true (default), <see cref="PornhubClient"/> also tries a small built-in list of alternate hosts when the response is not JSON.
+    /// </summary>
+    public bool IncludeBuiltInAlternateApiBases { get; set; } = true;
     /// <summary>Throw exceptions on non-success status codes.</summary>
     public bool ThrowOnHttpErrors { get; set; } = true;
     /// <summary>User-Agent header sent by the wrapper.</summary>

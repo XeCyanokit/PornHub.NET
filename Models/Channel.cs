@@ -12,4 +12,12 @@ public sealed class Channel
 
     [JsonPropertyName("channel_thumb")]
     public string? ThumbnailUrl { get; set; }
+
+    /// <summary>Rank on the public channels listing (scraped HTML only).</summary>
+    [JsonIgnore]
+    public int? Rank { get; set; }
+
+    /// <summary>Subscriber / video count line from listing (scraped HTML only).</summary>
+    [JsonIgnore]
+    public string? StatsLine { get; set; }
 }

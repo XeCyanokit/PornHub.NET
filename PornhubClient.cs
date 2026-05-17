@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -448,30 +449,106 @@ public sealed class PornhubClient : IPornhubClient
 
     private async Task<string?> GetPayloadTextAsync(string endpoint, Dictionary<string, string?>? query, CancellationToken cancellationToken)
     {
-        var requestUri = BuildEndpointUri(endpoint, query);
-        var cacheKey = BuildCacheKey(endpoint, query);
-        if (_options.Cache.Enabled && !string.IsNullOrWhiteSpace(cacheKey))
+        var bases = BuildDistinctApiBaseList();
+        var hostSpecificCache = bases.Count > 1;
+        string? lastPayload = null;
+
+        foreach (var baseUrl in bases)
         {
-            var cachedPayload = await _cache.GetAsync(cacheKey, cancellationToken).ConfigureAwait(false);
-            if (!string.IsNullOrWhiteSpace(cachedPayload))
+            var cacheKey = BuildCacheKey(endpoint, query, hostSpecificCache ? ApiBaseHostFingerprint(baseUrl) : null);
+            if (_options.Cache.Enabled && !string.IsNullOrWhiteSpace(cacheKey))
             {
-                RaiseRawResponseReceived(endpoint, query, cachedPayload);
-                return cachedPayload;
+                var cachedPayload = await _cache.GetAsync(cacheKey, cancellationToken).ConfigureAwait(false);
+                if (!string.IsNullOrWhiteSpace(cachedPayload) && LooksLikeJsonPayload(cachedPayload))
+                {
+                    RaiseRawResponseReceived(endpoint, query, cachedPayload);
+                    return cachedPayload;
+                }
             }
+
+            var requestUri = BuildAbsoluteUri(baseUrl, endpoint, query);
+            var payloadText = await SendWithResilienceAsync(endpoint, requestUri, cancellationToken).ConfigureAwait(false);
+            if (string.IsNullOrWhiteSpace(payloadText))
+                continue;
+
+            lastPayload = payloadText;
+            if (!LooksLikeJsonPayload(payloadText))
+                continue;
+
+            if (_options.Cache.Enabled && !string.IsNullOrWhiteSpace(cacheKey))
+            {
+                var ttl = ResolveCacheTtl(endpoint);
+                await _cache.SetAsync(cacheKey, payloadText, ttl, cancellationToken).ConfigureAwait(false);
+            }
+
+            RaiseRawResponseReceived(endpoint, query, payloadText);
+            return payloadText;
         }
 
-        var payloadText = await SendWithResilienceAsync(endpoint, requestUri, cancellationToken).ConfigureAwait(false);
-        if (string.IsNullOrWhiteSpace(payloadText))
-            return null;
+        if (!string.IsNullOrWhiteSpace(lastPayload))
+            RaiseRawResponseReceived(endpoint, query, lastPayload);
+        return lastPayload;
+    }
 
-        if (_options.Cache.Enabled && !string.IsNullOrWhiteSpace(cacheKey))
+    private List<string> BuildDistinctApiBaseList()
+    {
+        var list = new List<string>();
+        void add(string? url)
         {
-            var ttl = ResolveCacheTtl(endpoint);
-            await _cache.SetAsync(cacheKey, payloadText, ttl, cancellationToken).ConfigureAwait(false);
+            var n = NormalizeApiBaseUrl(url);
+            if (string.IsNullOrEmpty(n)) return;
+            if (list.Any(u => string.Equals(u, n, StringComparison.OrdinalIgnoreCase))) return;
+            list.Add(n);
         }
 
-        RaiseRawResponseReceived(endpoint, query, payloadText);
-        return payloadText;
+        add(_options.BaseUrl);
+        if (_options.IncludeBuiltInAlternateApiBases)
+        {
+            add("https://api.pornhub.com/webmasters/");
+            add("https://www.pornhub.org/webmasters/");
+        }
+
+        if (_options.AlternateApiBaseUrls is { Count: > 0 })
+        {
+            foreach (var u in _options.AlternateApiBaseUrls)
+                add(u);
+        }
+
+        return list;
+    }
+
+    private static string? NormalizeApiBaseUrl(string? url)
+    {
+        if (string.IsNullOrWhiteSpace(url)) return null;
+        var t = url.Trim();
+        if (!t.EndsWith('/')) t += '/';
+        return t;
+    }
+
+    private static string ApiBaseHostFingerprint(string baseUrl)
+    {
+        try
+        {
+            return new Uri(baseUrl, UriKind.Absolute).Host.ToLowerInvariant();
+        }
+        catch
+        {
+            return "invalid-host";
+        }
+    }
+
+    private static bool LooksLikeJsonPayload(string text)
+    {
+        var s = text.TrimStart();
+        return s.Length > 0 && (s[0] == '{' || s[0] == '[');
+    }
+
+    private static Uri BuildAbsoluteUri(string baseWithTrailingSlash, string endpoint, Dictionary<string, string?>? query)
+    {
+        var normalized = endpoint.Trim().TrimStart('/');
+        var queryString = BuildQueryString(query);
+        var relative = string.IsNullOrWhiteSpace(queryString) ? normalized : $"{normalized}?{queryString}";
+        return new Uri(new Uri(baseWithTrailingSlash, UriKind.Absolute), relative);
     }
 
     private void RaiseRawResponseReceived(string endpoint, Dictionary<string, string?>? query, string rawBody)
@@ -487,14 +564,6 @@ public sealed class PornhubClient : IPornhubClient
         if (string.IsNullOrWhiteSpace(payloadText))
             return default;
         return Deserialize<T>(endpoint, payloadText);
-    }
-
-    private Uri BuildEndpointUri(string endpoint, Dictionary<string, string?>? query)
-    {
-        var normalized = endpoint.Trim().TrimStart('/');
-        var queryString = BuildQueryString(query);
-        var relative = string.IsNullOrWhiteSpace(queryString) ? normalized : $"{normalized}?{queryString}";
-        return new Uri(_httpClient.BaseAddress!, relative);
     }
 
     private static string BuildQueryString(Dictionary<string, string?>? query)
@@ -682,10 +751,11 @@ public sealed class PornhubClient : IPornhubClient
         return Task.Delay(TimeSpan.FromMilliseconds(delayMs + jitterMs), cancellationToken);
     }
 
-    private string BuildCacheKey(string endpoint, Dictionary<string, string?>? query)
+    private static string BuildCacheKey(string endpoint, Dictionary<string, string?>? query, string? hostFingerprint)
     {
         var queryString = BuildQueryString(query);
-        return string.IsNullOrWhiteSpace(queryString) ? endpoint.Trim() : $"{endpoint.Trim()}?{queryString}";
+        var core = string.IsNullOrWhiteSpace(queryString) ? endpoint.Trim() : $"{endpoint.Trim()}?{queryString}";
+        return string.IsNullOrEmpty(hostFingerprint) ? core : $"{hostFingerprint}|{core}";
     }
 
     private TimeSpan ResolveCacheTtl(string endpoint)
