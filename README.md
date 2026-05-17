@@ -1,5 +1,8 @@
 # PornhubApiWrapper (.NET class library)
 
+# The Official .NET API Wrapper for the Unofficial Desktop Client
+visit `desktophub.app` to learn more.
+
 This is a clean `.NET` wrapper around the public `pornhub.com/webmasters` endpoints.
 
 The goal is simple: make API calls feel like normal C# code, not raw string parsing.
@@ -44,11 +47,6 @@ If this repo is local, easiest path is a project reference:
 <ProjectReference Include="..\PornhubApiWrapper\PornhubApiWrapper.csproj" />
 ```
 
-If you publish it as a NuGet package later, switch to:
-
-```xml
-<PackageReference Include="PornhubApiWrapper" Version="x.y.z" />
-```
 
 ---
 
