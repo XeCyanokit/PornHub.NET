@@ -149,50 +149,7 @@ if (!result.IsSuccess)
 
 ---
 
-## Caching notes
 
-- Caching is **off** by default
-- When enabled, cache keys are based on endpoint + normalized query
-- Per-endpoint TTL can be tuned in options
-
----
-
-## How to update this library (simple checklist)
-
-When you add/change API support:
-
-1. Update request/response models in `PornhubApiWrapper/Models` and `PornhubApiWrapper/Requests`
-2. Add or update the client method in `PornhubApiWrapper/PornhubClient.cs`
-3. Add tests in `PornhubApiWrapper.Tests`
-4. Build and test locally
-5. Update this README with any new examples
-6. Bump package/release version (if publishing)
-
-Commands:
-
-```powershell
-dotnet build "PornhubApiWrapper/PornhubApiWrapper.csproj"
-dotnet test "PornhubApiWrapper.Tests/PornhubApiWrapper.Tests.csproj"
-```
-
-If you also maintain the desktop proof-of-concept app:
-
-```powershell
-dotnet run --project "PornhubApiWrapper.DesktopClient/PornhubApiWrapper.DesktopClient.csproj"
-```
-
----
-
-## Releasing (recommended)
-
-- Tag releases with SemVer (`v1.2.3`)
-- Publish release notes with:
-  - what changed
-  - breaking changes (if any)
-  - migration notes
-- Publish SHA-256 checksums for distributed binaries
-
----
 
 ## Troubleshooting
 
